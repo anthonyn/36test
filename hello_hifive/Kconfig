@@ -1,0 +1,31 @@
+# Application Kconfig — thread execution periods
+# Override any of these in prj.conf with CONFIG_THREADx_PERIOD_MS=<value>
+
+config THREAD0_PERIOD_MS
+	int "Thread 0 execution period (ms)"
+	default 100
+	help
+	  How often thread_0 wakes and prints, in milliseconds.
+
+config THREAD1_PERIOD_MS
+	int "Thread 1 execution period (ms)"
+	default 250
+	help
+	  How often thread_1 wakes and prints, in milliseconds.
+
+config THREAD2_PERIOD_MS
+	int "Thread 2 execution period (ms)"
+	default 500
+	help
+	  How often thread_2 wakes and prints, in milliseconds.
+
+config THREAD3_PERIOD_MS
+	int "Thread 3 execution period (ms)"
+	default 1000
+	help
+	  How often thread_3 wakes and prints, in milliseconds.
+
+# Must be last — sources the entire Zephyr Kconfig tree.
+# When an app provides its own Kconfig file, Zephyr uses it as the
+# root, so it must explicitly pull in the rest of Zephyr's symbols.
+source "Kconfig.zephyr"
