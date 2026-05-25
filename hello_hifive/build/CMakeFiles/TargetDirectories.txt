@@ -121,6 +121,7 @@
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/pm/CMakeFiles/rebuild_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/portability/CMakeFiles/edit_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/portability/CMakeFiles/rebuild_cache.dir
+/home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/random/CMakeFiles/subsys__random.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/random/CMakeFiles/edit_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/random/CMakeFiles/rebuild_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/rtio/CMakeFiles/edit_cache.dir

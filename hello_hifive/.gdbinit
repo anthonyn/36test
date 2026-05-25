@@ -1,6 +1,16 @@
-# .gdbinit - Zephyr QEMU debug session for hello_hifive
-# Terminal 1: west build -t debugserver
-# Terminal 2: gdb-multiarch -x .gdbinit build/zephyr/zephyr.elf
+# .gdbinit - Zephyr debug session for hello_hifive
+#
+# Build (always use --build-dir to keep ELF in the expected place):
+#   cd ~/test/zephyr/36test
+#   west build -p always -b hifive1_revb hello_hifive --build-dir hello_hifive/build
+#   west flash --build-dir hello_hifive/build
+#
+# Terminal 1 - GDB server:
+#   west debugserver --build-dir hello_hifive/build
+#
+# Terminal 2 - GDB client (run from hello_hifive/ so the ELF path is right):
+#   cd ~/test/zephyr/36test/hello_hifive
+#   gdb-multiarch -x .gdbinit build/zephyr/zephyr.elf
 
 # Connection — QEMU uses :1234, J-Link GDB server uses :2331
 # Swap the active line depending on your target:

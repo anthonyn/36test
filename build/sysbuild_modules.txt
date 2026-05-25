@@ -1,1 +1,0 @@
-"mcuboot":"/home/tony/test/zephyr/36test/bootloader/mcuboot":"/home/tony/test/zephyr/36test/bootloader/mcuboot/boot/zephyr/sysbuild"
