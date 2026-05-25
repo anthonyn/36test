@@ -37,3 +37,8 @@ if(NOT DEFINED CMAKE_OBJDUMP)
   set(CMAKE_OBJDUMP "/opt/zephyr-sdk-0.16.5/riscv64-zephyr-elf/bin/riscv64-zephyr-elf-objdump")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/tracing/sysview/cmake_install.cmake")
+endif()
+

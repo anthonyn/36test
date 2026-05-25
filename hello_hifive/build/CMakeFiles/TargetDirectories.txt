@@ -138,6 +138,8 @@
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/testsuite/CMakeFiles/rebuild_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/tracing/CMakeFiles/edit_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/tracing/CMakeFiles/rebuild_cache.dir
+/home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/tracing/sysview/CMakeFiles/edit_cache.dir
+/home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/tracing/sysview/CMakeFiles/rebuild_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/usb/CMakeFiles/edit_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/subsys/usb/CMakeFiles/rebuild_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/zephyr/drivers/CMakeFiles/edit_cache.dir
@@ -272,6 +274,7 @@
 /home/tony/test/zephyr/36test/hello_hifive/build/modules/percepio/CMakeFiles/rebuild_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/modules/picolibc/CMakeFiles/edit_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/modules/picolibc/CMakeFiles/rebuild_cache.dir
+/home/tony/test/zephyr/36test/hello_hifive/build/modules/segger/CMakeFiles/modules__segger.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/modules/segger/CMakeFiles/edit_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/modules/segger/CMakeFiles/rebuild_cache.dir
 /home/tony/test/zephyr/36test/hello_hifive/build/modules/tinycrypt/CMakeFiles/edit_cache.dir
