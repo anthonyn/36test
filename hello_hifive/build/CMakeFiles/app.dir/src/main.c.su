@@ -1,0 +1,10 @@
+/home/tony/test/zephyr/36test/hello_hifive/src/main.c:31:20:fatal_reason_str	0	static
+/home/tony/test/zephyr/36test/zephyr/include/zephyr/kernel.h:1770:24:k_uptime_get_32	16	static
+/home/tony/test/zephyr/36test/hello_hifive/src/main.c:120:13:log_stack_hwm	32	static
+/home/tony/test/zephyr/36test/hello_hifive/src/main.c:188:13:mock_irq_fn	32	static
+/home/tony/test/zephyr/36test/hello_hifive/src/main.c:140:13:thread_body	16	static
+/home/tony/test/zephyr/36test/hello_hifive/src/main.c:175:13:thread_2_fn	16	static
+/home/tony/test/zephyr/36test/hello_hifive/src/main.c:170:13:thread_1_fn	16	static
+/home/tony/test/zephyr/36test/hello_hifive/src/main.c:165:13:thread_0_fn	16	static
+/home/tony/test/zephyr/36test/hello_hifive/src/main.c:43:6:k_sys_fatal_error_handler	48	static
+/home/tony/test/zephyr/36test/hello_hifive/src/main.c:217:5:main	32	static

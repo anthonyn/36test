@@ -22,6 +22,64 @@
 
 #include <zephyr/kernel.h>
 #include <zephyr/random/random.h>
+#include <zephyr/fatal.h>      /* K_ERR_* + k_fatal_halt() */
+
+/* ── fatal error handler ───────────────────────────────────────────────────
+ * Overrides the __weak default.  Prints thread name, stack bounds, saved SP,
+ * and (when CONFIG_INIT_STACKS=y) the high-water mark before halting.
+ * Runs with IRQs locked; keep it short.  printk→UART is safe.            */
+static const char *fatal_reason_str(unsigned int r)
+{
+	switch (r) {
+	case K_ERR_CPU_EXCEPTION:   return "CPU exception";
+	case K_ERR_SPURIOUS_IRQ:    return "spurious IRQ";
+	case K_ERR_STACK_CHK_FAIL:  return "stack sentinel fail";
+	case K_ERR_KERNEL_OOPS:     return "kernel oops";
+	case K_ERR_KERNEL_PANIC:    return "kernel panic";
+	default:                    return "unknown";
+	}
+}
+
+void k_sys_fatal_error_handler(unsigned int reason, const z_arch_esf_t *esf)
+{
+	ARG_UNUSED(esf);
+
+	struct k_thread *t = k_current_get();
+
+	printk("\n");
+	printk("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+	printk("!! FATAL: %s (code %u)\n", fatal_reason_str(reason), reason);
+
+	if (t != NULL) {
+		uint32_t base  = (uint32_t)t->stack_info.start;
+		uint32_t size  = (uint32_t)t->stack_info.size;
+		uint32_t top   = base + size;
+		uint32_t sp    = (uint32_t)t->callee_saved.sp;
+
+		printk("!! thread : %s\n", t->name);
+		printk("!! stack  : 0x%08x – 0x%08x  (%u B)\n", base, top, size);
+		printk("!! saved SP: 0x%08x\n", sp);
+
+		if (sp >= base && sp < top) {
+			uint32_t used = top - sp;
+			printk("!! used   : %u B / %u B  (%u%%)\n",
+			       used, size, used * 100u / size);
+		} else {
+			printk("!! *** SP outside stack — overflow confirmed ***\n");
+		}
+
+#ifdef CONFIG_INIT_STACKS
+		size_t unused = 0;
+		if (k_thread_stack_space_get(t, &unused) == 0) {
+			printk("!! HWM    : %u B used of %u B\n",
+			       size - (uint32_t)unused, size);
+		}
+#endif
+	}
+
+	printk("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n");
+	k_fatal_halt(reason);
+}
 
 /* ── stack / priority ──────────────────────────────────────────────────── */
 /* App threads: k_sem_take + printk(4 args).  1 KB has ~300 B headroom.    */
@@ -58,6 +116,26 @@ K_THREAD_STACK_DEFINE(irq_stack, IRQ_STACK_SIZE);
 static struct k_thread app_threads[3];
 static struct k_thread irq_thread;
 
+/* ── stack high-water mark helper ─────────────────────────────────────── */
+static void log_stack_hwm(const char *name)
+{
+#ifdef CONFIG_INIT_STACKS
+	size_t unused = 0;
+	struct k_thread *t = k_current_get();
+
+	if (k_thread_stack_space_get(t, &unused) == 0) {
+		uint32_t size = (uint32_t)t->stack_info.size;
+		uint32_t used = size - (uint32_t)unused;
+
+		printk("[%6u ms] [%s] stack: %u / %u B used (%u%% full)\n",
+		       k_uptime_get_32(), name, used, size,
+		       used * 100u / size);
+	}
+#else
+	ARG_UNUSED(name);
+#endif
+}
+
 /* ── shared application thread body ───────────────────────────────────── */
 static void thread_body(const struct thread_cfg *cfg, struct k_sem *sem) {
   uint32_t wake_count = 0;
@@ -73,6 +151,8 @@ static void thread_body(const struct thread_cfg *cfg, struct k_sem *sem) {
     wake_count++;
     printk("[%6u ms] [%s] WAKE #%u - semaphore taken (count now=%u)\n",
            k_uptime_get_32(), cfg->name, wake_count, k_sem_count_get(sem));
+
+    log_stack_hwm(cfg->name);
 
     /* Do a small amount of "work" so SystemView shows the thread
      * actually running before it blocks again.                  */
@@ -128,6 +208,7 @@ static void mock_irq_fn(void *p1, void *p2, void *p3) {
              k_sem_count_get(sems[i]));
 
       k_sem_give(sems[i]);
+      log_stack_hwm("mock_irq");
     }
   }
 }

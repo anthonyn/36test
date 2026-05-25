@@ -1,0 +1,26 @@
+{
+  "isr_overhead": 256,
+  "build_dir": "build",
+  "threads": [
+    {
+      "name":        "thread_0",
+      "entry":       "thread_0_fn",
+      "stack_bytes": 1024
+    },
+    {
+      "name":        "thread_1",
+      "entry":       "thread_1_fn",
+      "stack_bytes": 1024
+    },
+    {
+      "name":        "thread_2",
+      "entry":       "thread_2_fn",
+      "stack_bytes": 1024
+    },
+    {
+      "name":         "mock_irq",
+      "entry":        "mock_irq_fn",
+      "stack_symbol": "irq_stack"
+    }
+  ]
+}
